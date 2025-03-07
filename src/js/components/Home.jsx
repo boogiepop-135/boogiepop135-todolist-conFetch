@@ -81,135 +81,82 @@ function Home() {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Lista de tareas</h2>
-      <div style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && createTodo()}
-          placeholder="Nueva tarea..."
-          style={{
-            padding: "10px",
-            width: "300px",
-            marginRight: "10px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        />
-        <button
-          onClick={createTodo}
-          style={{
-            padding: "10px 15px",
-            borderRadius: "5px",
-            border: "none",
-            background: "#28a745",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          Agregar
-        </button>
-      </div>
-
-      <ul style={{ listStyle: "none", padding: "0", width: "400px", margin: "0 auto" }}>
-        {todos.map((todo) => (
-          <li
-            key={todo.id}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              marginBottom: "10px",
-            }}
-          >
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <h2 className="text-center">Lista de tareas</h2>
+          <div className="input-group mb-3">
             <input
-              type="checkbox"
-              checked={todo.is_done}
-              onChange={() => toggleTodo(todo)}
+              type="text"
+              className="form-control"
+              placeholder="Escribe una tarea..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && createTodo()}
             />
-
-            {editingTodo === todo.id ? (
-              <input
-                type="text"
-                value={editInput}
-                onChange={(e) => setEditInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && updateTodo(todo.id)}
-                style={{
-                  padding: "5px",
-                  width: "60%",
-                  borderRadius: "3px",
-                  border: "1px solid #ccc",
-                }}
-              />
-            ) : (
-              <span
-                style={{
-                  textDecoration: todo.is_done ? "line-through" : "none",
-                  flexGrow: 1,
-                  textAlign: "left",
-                  marginLeft: "10px",
-                }}
-              >
-                {todo.label}
-              </span>
-            )}
-
-            {editingTodo === todo.id ? (
-              <button
-                onClick={() => updateTodo(todo.id)}
-                style={{
-                  marginLeft: "10px",
-                  padding: "5px 10px",
-                  borderRadius: "5px",
-                  border: "none",
-                  background: "#007bff",
-                  color: "white",
-                  cursor: "pointer",
-                }}
-              >
-                Guardar
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  setEditingTodo(todo.id);
-                  setEditInput(todo.label);
-                }}
-                style={{
-                  marginLeft: "10px",
-                  padding: "5px 10px",
-                  borderRadius: "5px",
-                  border: "none",
-                  background: "#ffc107",
-                  cursor: "pointer",
-                }}
-              >
-                Editar
-              </button>
-            )}
-
-            <button
-              onClick={() => deleteTodo(todo.id)}
-              style={{
-                marginLeft: "10px",
-                padding: "5px 10px",
-                borderRadius: "5px",
-                border: "none",
-                background: "#dc3545",
-                color: "white",
-                cursor: "pointer",
-              }}
-            >
-              Eliminar
+            <button className="btn btn-success" onClick={createTodo}>
+              Agregar
             </button>
-          </li>
-        ))}
-      </ul>
+          </div>
+
+          <ul className="list-group">
+            {todos.map((todo) => (
+              <li
+                key={todo.id}
+                className="list-group-item d-flex justify-content-between align-items-center"
+              >
+                <input
+                  type="checkbox"
+                  checked={todo.is_done}
+                  onChange={() => toggleTodo(todo)}
+                />
+
+                {editingTodo === todo.id ? (
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={editInput}
+                    onChange={(e) => setEditInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && updateTodo(todo.id)}
+                    style={{ width: "60%" }}
+                  />
+                ) : (
+                  <span
+                    className="flex-grow-1 ms-2"
+                    style={{
+                      textDecoration: todo.is_done ? "line-through" : "none",
+                    }}
+                  >
+                    {todo.label}
+                  </span>
+                )}
+
+                <div>
+                  {editingTodo === todo.id ? (
+                    <button className="btn btn-primary btn-sm me-2" onClick={() => updateTodo(todo.id)}>
+                      Guardar
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-warning btn-sm me-2"
+                      onClick={() => {
+                        setEditingTodo(todo.id);
+                        setEditInput(todo.label);
+                      }}
+                    >
+                      Editar
+                    </button>
+                  )}
+
+                  <button className="btn btn-danger btn-sm" onClick={() => deleteTodo(todo.id)}>
+                    Eliminar
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
